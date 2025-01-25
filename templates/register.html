@@ -53,7 +53,6 @@
 
                 let isValid = true;
 
-                // Check length requirement
                 if (password.length >= 8) {
                     lengthRequirement.classList.remove('text-muted');
                     lengthRequirement.classList.add('text-success');
@@ -63,8 +62,8 @@
                     isValid = false;
                 }
 
-                // Check similarity (placeholder logic)
-                const isSimilar = false; // Simulate similarity check
+                
+                const isSimilar = false;  
                 if (!isSimilar) {
                     similarityRequirement.classList.remove('text-muted');
                     similarityRequirement.classList.add('text-success');
@@ -74,7 +73,7 @@
                     isValid = false;
                 }
 
-                // Check common password (placeholder logic)
+                 
                 const isCommonPassword = ['123456', 'password', 'qwerty'].includes(password);
                 if (!isCommonPassword) {
                     commonRequirement.classList.remove('text-muted');
@@ -85,7 +84,7 @@
                     isValid = false;
                 }
 
-                // Check numeric requirement
+                 
                 if (isNaN(password)) {
                     numericRequirement.classList.remove('text-muted');
                     numericRequirement.classList.add('text-success');
@@ -95,7 +94,7 @@
                     isValid = false;
                 }
 
-                // Toggle visibility of password help
+                
                 if (isValid) {
                     passwordHelp.classList.add('d-none');
                 } else {

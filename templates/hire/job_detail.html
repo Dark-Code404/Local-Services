@@ -29,7 +29,7 @@
             </div>
             <p><strong>Required Workers:</strong> {{ job.required_workers }}</p><br>
 
-            <!-- Map Container -->
+            
             <div id="map" style="height: 400px; width: 100%;"></div>
             <p id="debug-coordinates">
                 Latitude: {{ coordinates.y }} | Longitude: {{ coordinates.x }}
@@ -51,29 +51,28 @@
         const latitude = {{ coordinates.y|default:"0" }};
         const longitude = {{ coordinates.x|default:"0" }};
 
-        // Validate coordinates
+         
         if (latitude == 0 || longitude == 0) {
             console.error("Invalid coordinates:", latitude, longitude);
             document.getElementById('map').innerHTML = '<p class="text-danger">Invalid map coordinates provided.</p>';
             return;
         }
 
-        // Initialize the map
+         
         const map = L.map('map').setView([latitude, longitude], 13);
 
-        // Add OpenStreetMap tiles
+         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Add a marker for the job location
+         
         const jobMarker = L.marker([latitude, longitude])
             .addTo(map)
             .bindPopup(`<strong>{{ job.title }}</strong><br>{{ job.location }}`)
             .openPopup();
 
-        // Function to show directions
         function showDirections() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
@@ -81,13 +80,11 @@
                         const userLat = position.coords.latitude;
                         const userLng = position.coords.longitude;
 
-                        // Add a marker for the user's location
                         const userMarker = L.marker([userLat, userLng])
                             .addTo(map)
                             .bindPopup("Your location")
                             .openPopup();
 
-                        // Add routing from user's location to job location
                         L.Routing.control({
                             waypoints: [
                                 L.latLng(userLat, userLng),
@@ -110,7 +107,6 @@
             }
         }
 
-        // Add click event listener to the "Show Direction" button
         const directionBtn = document.getElementById('show-direction-btn');
         directionBtn.addEventListener('click', showDirections);
     });
