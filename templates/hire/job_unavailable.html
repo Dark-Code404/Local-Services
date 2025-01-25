@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Job Unavailable{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm border-0 text-center">
+        <div class="card-body">
+            <h2 class="card-title text-danger">Job Unavailable</h2>
+            <p class="card-text mt-3">
+                The job titled <strong>"{{ job.title }}"</strong> is no longer accepting applications.
+            </p>
+            <a href="{% url 'home' %}" class="btn btn-primary mt-4">Back to Jobs</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

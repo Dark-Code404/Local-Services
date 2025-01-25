@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="mt-auto">
+
+    
+    <form action="{% url 'initiate_khalti_payment' applicant.id %}" method="POST" class="d-inline">
+        <input type="number" name="amount" id="amount" placeholder="add amount to pay">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success btn-sm">Accept</button>
+    </form>
+    
+</div>  
+
+
+{% endblock content %}

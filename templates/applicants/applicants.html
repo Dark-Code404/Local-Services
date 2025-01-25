@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Job Applicants</h2>
+
+    <div class="row">
+        {% for applicant in applicants %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ applicant.job.title }}</h5>
+                    
+                    <div class="text-center">
+                        {% if applicant.worker.profile_picture %}
+                        <img src="{{ applicant.worker.profile_picture.url }}" alt="Profile Picture" class="rounded-circle" width="80">
+                        {% else %}
+                        <img src="{% static 'default_profile.png' %}" alt="Default Profile" class="rounded-circle" width="80">
+                        {% endif %}
+                    </div>
+
+                    <p><strong>Name:</strong> {{ applicant.name }}</p>
+                    <p><strong>Username:</strong> {{ applicant.worker.username }}</p>
+                    <p><strong>Email:</strong> {{ applicant.email }}</p>
+                    <p><strong>Phone:</strong> {{ applicant.phone_number }}</p>
+                    <p><strong>Status:</strong> <span class="badge bg-info">{{ applicant.status }}</span></p>
+                    <p><strong>Paid:</strong> <span class="badge bg-info">{{ applicant.is_paid }}</span></p>
+                    
+                    {% if not applicant.is_paid %}
+                    <div class="mt-auto">
+                        <button type="submit" class="btn btn-success btn-sm"><a href="{% url 'amounts' applicant.id %}">Add amount</a></button>
+                        
+                    </div>  
+                    
+                    
+                   
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center">No applicants available. Check back later!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

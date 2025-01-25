@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+
+<div class="container">
+    {% if status == "Completed" %}
+        <h1>Payment Successful!</h1>
+        <p>Thank you for your payment. Your transaction details are below:</p>
+        <p><strong>Transaction ID:</strong> {{ transaction_id }}</p>
+        <p><strong>Order ID:</strong> {{ purchase_order_id }}</p>
+        <p><strong>Amount:</strong> Rs. {{ amount|floatformat:2 }}</p>
+        <p><strong>Mobile:</strong> {{ mobile }}</p>
+        <a href="/" class="btn">Go to Home</a>
+    {% else %}
+        <div class="error">
+            <h1>{{status}}      </h1>
+            <p>{{ status }} the payment process</p>
+            <p>Please contact support if the issue persists.</p>
+            <a href="/" class="btn">Go to Home</a>
+        </div>
+    {% endif %}
+</div>
+
+ 
+
+
+
+{% endblock content %}

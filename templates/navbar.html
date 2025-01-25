@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">Job Portal</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">   
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                    {% if user.role == 'hire' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'add_job' %}"><i class="fas fa-plus-circle"></i> Post a Job</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'applicants' %}"><i class="fas fa-plus-circle"></i> Job applicants</a>
+                        </li>
+                    {% elif user.role == 'worker' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'search_jobs_by_location' %}"><i class="fas fa-search"></i> Search Jobs</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}"><i class="fas fa-user"></i> Profile</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

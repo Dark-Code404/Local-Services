@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Already Applied{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2 class="text-warning mb-4">You've Already Applied</h2>
+    <p class="lead">You have already submitted your application for the job titled <strong>"{{ job.title }}"</strong>.</p>
+    <a href="{% url 'home' %}" class="btn btn-primary mt-3">Back to Jobs</a>
+</div>
+{% endblock %}

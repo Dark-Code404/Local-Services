@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Create Your Account</h2>
+
+    <form method="POST" class="col-md-6 mx-auto" id="registrationForm">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group mb-4"> <!-- Added mb-4 for spacing -->
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.name == "password1" %}
+                    <div id="passwordHelp" class="form-text text-muted d-none">
+                        Your password must:
+                        <ul>
+                            <li id="require-length" class="text-muted">Be at least 8 characters long</li>
+                            <li id="require-similarity" class="text-muted">Not be similar to your personal information</li>
+                            <li id="require-common" class="text-muted">Not be a commonly used password</li>
+                            <li id="require-numeric" class="text-muted">Not be entirely numeric</li>
+                        </ul>
+                    </div>
+                {% endif %}
+                {% for error in field.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+    </form>
+
+    <div class="text-center mt-3">
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordField = document.getElementById('{{ form.password1.id_for_label }}');
+        const passwordHelp = document.getElementById('passwordHelp');
+
+        const lengthRequirement = document.getElementById('require-length');
+        const similarityRequirement = document.getElementById('require-similarity');
+        const commonRequirement = document.getElementById('require-common');
+        const numericRequirement = document.getElementById('require-numeric');
+
+        if (passwordField) {
+            passwordField.addEventListener('input', function () {
+                const password = passwordField.value;
+
+                let isValid = true;
+
+                // Check length requirement
+                if (password.length >= 8) {
+                    lengthRequirement.classList.remove('text-muted');
+                    lengthRequirement.classList.add('text-success');
+                } else {
+                    lengthRequirement.classList.remove('text-success');
+                    lengthRequirement.classList.add('text-muted');
+                    isValid = false;
+                }
+
+                // Check similarity (placeholder logic)
+                const isSimilar = false; // Simulate similarity check
+                if (!isSimilar) {
+                    similarityRequirement.classList.remove('text-muted');
+                    similarityRequirement.classList.add('text-success');
+                } else {
+                    similarityRequirement.classList.remove('text-success');
+                    similarityRequirement.classList.add('text-muted');
+                    isValid = false;
+                }
+
+                // Check common password (placeholder logic)
+                const isCommonPassword = ['123456', 'password', 'qwerty'].includes(password);
+                if (!isCommonPassword) {
+                    commonRequirement.classList.remove('text-muted');
+                    commonRequirement.classList.add('text-success');
+                } else {
+                    commonRequirement.classList.remove('text-success');
+                    commonRequirement.classList.add('text-muted');
+                    isValid = false;
+                }
+
+                // Check numeric requirement
+                if (isNaN(password)) {
+                    numericRequirement.classList.remove('text-muted');
+                    numericRequirement.classList.add('text-success');
+                } else {
+                    numericRequirement.classList.remove('text-success');
+                    numericRequirement.classList.add('text-muted');
+                    isValid = false;
+                }
+
+                // Toggle visibility of password help
+                if (isValid) {
+                    passwordHelp.classList.add('d-none');
+                } else {
+                    passwordHelp.classList.remove('d-none');
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
